@@ -38,10 +38,14 @@ defmodule MyList do
   #. (This is slightly trickier than it sounds.)
   #
   def max(list), do: _max(list, nil)
+
   defp _max([], max_value), do: max_value
-  defp _max([head | tail], max_value) when (head > max_value) or (max_value == nil) do
+
+  defp _max([head | tail], max_value)
+  when (head > max_value) or (max_value == nil) do
     _max(tail, head)
   end
+
   defp _max([_head | tail], max_value), do: _max(tail, max_value)
 
   # Exercise: ListsAndRecursion-3
@@ -52,9 +56,12 @@ defmodule MyList do
   # ​iex>​ MyList.caesar(​'ryvkve'​, 13)
   # ​ ?????? :)”
   def caesar([], _shift), do: []
-  def caesar([head | tail], shift) when head + rem(shift, 26) > 122 do
+
+  def caesar([head | tail], shift)
+  when head + rem(shift, 26) > 122 do
     [head + rem(shift, 26) - 26 | caesar(tail, shift)]
   end
+
   def caesar([head | tail], shift) do
     [head + rem(shift, 26) | caesar(tail, shift)]
   end
