@@ -58,4 +58,9 @@ defmodule MyList do
   def caesar([head | tail], shift) do
     [head + rem(shift, 26) | caesar(tail, shift)]
   end
+
+  # Write a function MyList.span(from, to) that returns a list of the numbers
+  # from from up to to.
+  def span(from, to) when from >= to, do: [from]
+  def span(from, to), do: [from | span(from + 1, to)]
 end
