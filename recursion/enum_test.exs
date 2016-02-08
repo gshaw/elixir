@@ -34,4 +34,21 @@ defmodule EnumTest do
       false
     end
   end
+
+  # Invokes the given fun for each item in the enumerable.
+  #
+  # Returns :ok.
+  #
+  # Examples
+  #
+  # ┃ EnumTest.each(["some", "example"], fn(x) -> IO.puts x end)
+  # ┃ "some"
+  # ┃ "example"
+  # ┃ #=> :ok
+  #
+  def each([], _fun), do: :ok
+  def each([head | tail], fun) do
+    fun.(head)
+    each(tail, fun)
+  end
 end
