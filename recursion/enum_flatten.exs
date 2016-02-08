@@ -11,4 +11,16 @@ defmodule EnumFlatten do
   def flatten([head | tail]) do
     flatten(head) ++ flatten(tail)
   end
+
+  # José Valim implementation using trees. Nice!
+  # def flatten(list), do: _flatten(list, [])
+  # defp _flatten([head | tail], right) when is_list(head) do
+  #   _flatten(head, _flatten(tail, right))
+  # end
+  # defp _flatten([head | tail], right) do
+  #   [head | _flatten(tail, right)]
+  # end
+  # defp _flatten([], right) do
+  #   right
+  # end
 end
