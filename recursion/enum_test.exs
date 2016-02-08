@@ -1,9 +1,6 @@
-# Exercise: Implement all?, each, filter, split, and take without any libraries.
+# Exercise: ListsAndRecursion-5
 #
 defmodule EnumTest do
-
-  # def all?(enumerable, fun \\ fn x -> x end)
-  #
   # Invokes the given fun for each item in the enumerable. It stops the iteration
   # at the first invocation that returns false or nil. It returns false if at least
   # one invocation returns false or nil. Otherwise returns true.
@@ -114,4 +111,31 @@ defmodule EnumTest do
   #
   def count([]), do: 0
   def count([_head | tail]), do: 1 + count(tail)
+
+  # Takes the first count items from the enumerable.
+  #
+  # count must be an integer. If a negative count is given, the last count values
+  # will be taken. For such, the enumerable is fully enumerated keeping up to 2 *
+  # count elements in memory. Once the end of the enumerable is reached, the last
+  # count elements are returned.
+  #
+  # Examples
+  #
+  # ┃ iex> Enum.take([1, 2, 3], 2)
+  # ┃ [1, 2]
+  # ┃
+  # ┃ iex> Enum.take([1, 2, 3], 10)
+  # ┃ [1, 2, 3]
+  # ┃
+  # ┃ iex> Enum.take([1, 2, 3], 0)
+  # ┃ []
+  # ┃
+  # ┃ iex> Enum.take([1, 2, 3], -1)
+  # ┃ [3]
+  #
+  def take(enumerable, count) do
+    # Innefficient but trivial implementation.
+    { left, _right } = split(enumerable, count)
+    left
+  end
 end
