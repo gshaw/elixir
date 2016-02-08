@@ -51,4 +51,21 @@ defmodule EnumTest do
     fun.(head)
     each(tail, fun)
   end
+
+  # Filters the enumerable, i.e. returns only those elements for which fun returns
+  # a truthy value.
+  #
+  # Examples
+  #
+  # ┃ iex> EnumTest.filter([1, 2, 3], fn(x) -> rem(x, 2) == 0 end)
+  # ┃ [2]
+  #
+  def filter([], _fun), do: []
+  def filter([head | tail], fun) do
+    if fun.(head) do
+      [head | filter(tail, fun)]
+    else
+      filter(tail, fun)
+    end
+  end
 end
