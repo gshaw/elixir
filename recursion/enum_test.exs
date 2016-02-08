@@ -68,4 +68,50 @@ defmodule EnumTest do
       filter(tail, fun)
     end
   end
+
+  # Splits the enumerable into two enumerables, leaving count elements in the first
+  # one. If count is a negative number, it starts counting from the back to the
+  # beginning of the enumerable.
+  #
+  # Be aware that a negative count implies the enumerable will be enumerated twice:
+  # once to calculate the position, and a second time to do the actual splitting.
+  #
+  # Examples
+  #
+  # ┃ iex> EnumTest.split([1, 2, 3], 2)
+  # ┃ {[1, 2], [3]}
+  # ┃
+  # ┃ iex> EnumTest.split([1, 2, 3], 10)
+  # ┃ {[1, 2, 3], []}
+  # ┃
+  # ┃ iex> EnumTest.split([1, 2, 3], 0)
+  # ┃ {[], [1, 2, 3]}
+  # ┃
+  # ┃ iex> EnumTest.split([1, 2, 3], -1)
+  # ┃ {[1, 2], [3]}
+  # ┃
+  # ┃ iex> EnumTest.split([1, 2, 3], -5)
+  # ┃ {[], [1, 2, 3]}
+  #
+  def split([], _count), do: {[], []}
+  def split(enumerable, 0), do: {[], enumerable}
+  def split([head | tail], count) when count > 0 do
+    # WARNING: Does not use tail call optimization so this will stack overflow
+    # for large enumerations.  Good thing we can just use Enum.split.
+    { left, right } = split(tail, count - 1)
+    { [head] ++ left, right }
+  end
+  def split(enumerable, count) when count < 0 do
+    length = count(enumerable) # implementation below
+    count = length + count
+    if count < 0 do
+      count = 0
+    end
+    split(enumerable, count)
+  end
+
+  # Returns the size of the enumerable.
+  #
+  def count([]), do: 0
+  def count([_head | tail]), do: 1 + count(tail)
 end
