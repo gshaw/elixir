@@ -13,6 +13,7 @@ defmodule Strings do
   end
 
   # Alternate solution using Enum methods
+  # https://forums.pragprog.com/forums/322/topics/11939
   def is_printable_ascii_alternate(string) do
     printable_ascii = ?\s..?~
     Enum.all?(string, &(Enum.member?(printable_ascii, &1)))
@@ -22,4 +23,9 @@ defmodule Strings do
   def anagram?(word1, word2) do
     Enum.all?(word1, &(Enum.member?(word2, &1)))
   end
+
+  # Alternate anagram solution
+  # https://forums.pragprog.com/forums/322/topics/11940
+  def anagram_alternate?(word1, word2) when length(word1) != length(word2), do: false
+  def anagram_alternate?(word1, word2), do: (word1 -- word2) == []
 end
