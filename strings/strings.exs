@@ -11,4 +11,10 @@ defmodule Strings do
       is_printable_ascii(tail)
     end
   end
+
+  # Alternate solution using Enum methods
+  def is_printable_ascii_alternate(string) do
+    printable_ascii = ?\s..?~
+    Enum.all?(string, &(Enum.member?(printable_ascii, &1)))
+  end
 end
