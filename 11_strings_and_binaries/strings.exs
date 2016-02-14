@@ -102,21 +102,21 @@ defmodule Strings do
   # | ​iex>​ capitalize_sentences("oh. a DOG. woof. ")
   # | ​"Oh. A dog. Woof. "​
   #
-  def capitalize_sentences(str), do: _capitalize_sentences(String.next_codepoint(str), true)
-  def _capitalize_sentences(nil, _capitalize_next), do: <<>>
-  def _capitalize_sentences({codepoint, rest}, capitalize_next) do
-    if codepoint != " " do
-      if capitalize_next do
-        codepoint = String.upcase(codepoint)
-        capitalize_next = false
-      else
-        codepoint = String.downcase(codepoint)
+    def capitalize_sentences(str), do: _capitalize_sentences(String.next_codepoint(str), true)
+    def _capitalize_sentences(nil, _capitalize_next), do: <<>>
+    def _capitalize_sentences({codepoint, rest}, capitalize_next) do
+      if codepoint != " " do
+        if capitalize_next do
+          codepoint = String.upcase(codepoint)
+          capitalize_next = false
+        else
+          codepoint = String.downcase(codepoint)
+        end
+        if codepoint == "." do
+          capitalize_next = true
+        end
       end
-      if codepoint == "." do
-        capitalize_next = true
-      end
-    end
 
-    codepoint <> _capitalize_sentences(String.next_codepoint(rest), capitalize_next)
-  end
+      codepoint <> _capitalize_sentences(String.next_codepoint(rest), capitalize_next)
+    end
 end
