@@ -17,4 +17,9 @@ defmodule Strings do
     printable_ascii = ?\s..?~
     Enum.all?(string, &(Enum.member?(printable_ascii, &1)))
   end
+
+  # Returns true if word1 and word2 are anagrams.
+  def anagram?(word1, word2) do
+    Enum.all?(word1, &(Enum.member?(word2, &1)))
+  end
 end
