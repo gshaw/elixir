@@ -1,8 +1,11 @@
 defmodule Issues.GitHubIssues do
+  require Logger
+
   @user_agent [ { "User-agent", "Elixir test program" }]
   @github_url Application.get_env(:issues, :github_url)
 
   def fetch(user, project) do
+    Logger.info "Fetching issues for #{user}/#{project}"
     issues_url(user, project)
       |> HTTPoison.get(@user_agent)
       |> handle_response
